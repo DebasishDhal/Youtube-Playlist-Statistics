@@ -19,19 +19,22 @@ calculation_type_input = gr.inputs.Radio(["Total Duration", "Average Duration"],
 outputs = gr.outputs.Textbox(label="Result")
 
 heading = "YouTube Playlist Duration Calculator"
-description = "Enter a YouTube playlist link and choose the calculation type to calculate its total duration or average duration."
+description = '''Enter a YouTube playlist link to calculate its total duration or average duration.\n
+Do not enter the link of a video that belongs to that playlist.\n
+Use the link in the share option of the playlist's page
+'''
 
 
-interface1 = gr.Interface(
+duration_interface = gr.Interface(
     fn=playlist_duration_calculator,
     inputs=[playlist_link_input, calculation_type_input],
     outputs=outputs,
     title=heading,
     description=description,
-    examples=[
-        ["https://www.youtube.com/playlist?list=PL-osiE80TeTsWmV9i9c58mdDCSskIFdDS", "Total Duration"],
-        ["https://www.youtube.com/playlist?list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p", "Average Duration"],
-    ],
+    # examples=[ 
+    #     ["https://www.youtube.com/playlist?list=PL-osiE80TeTsWmV9i9c58mdDCSskIFdDS", "Total Duration"],
+    #     ["https://www.youtube.com/playlist?list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p", "Average Duration"],
+    # ], #Examples have been removed, they were creating some problems.
     theme="compact",
 )
 
@@ -50,7 +53,7 @@ playlist_link_1_input = gr.inputs.Textbox(label="Playlist Link 1")
 playlist_link_2_input = gr.inputs.Textbox(label="Playlist Link 2")
 output_options = gr.inputs.Radio(["id", "link", "name"], label="Output Options")
 
-interface2 = gr.Interface(
+mismatch_interface = gr.Interface(
     fn=playlist_mismatch_calculator,
     inputs=[playlist_link_1_input, playlist_link_2_input, output_options],
     outputs=mismatch_outputs,
@@ -62,10 +65,5 @@ interface2 = gr.Interface(
     theme="compact",
 )
 
-
-# interface1.launch()    
-# interface2.launch()
-
-combinedinterface = gr.TabbedInterface([interface1,interface2],['Playlist Total and Average Duration', 'Playlist Mismatch'])
-
+combinedinterface = gr.TabbedInterface([duration_interface,mismatch_interface],['Playlist Total and Average Duration', 'Playlist Mismatch'])
 combinedinterface.launch()
