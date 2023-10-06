@@ -1,11 +1,45 @@
-Repository to produce statistics of Youtube playlists. The statistics include Total duration, Average duration of the videos in playlist.
+---
+title: Youtube Playlist
+emoji: 🎥
+colorFrom: blue
+colorTo: indigo
+sdk: gradio
+sdk_version: 3.35.2
+app_file: app.py
+pinned: false
+license: cc
+---
+# Total duration of playlist
+For a given playlist, it calculates the duration of each public video in that playlist and sums them to produce the total duration. The total duration of the playlist given below is 1 hour, 58 minutes.
+[Playlist link](https://youtube.com/playlist?list=PLuhqtP7jdD8CD6rOWy20INGM44kULvrHu&si=G4rrT1wQfQVvzTJF)
+
+<p align="center">
+  <img src="images/total_duration.png" alt="CloudSat orbit superimposed on INSAT-3DR coverage area.">
+</p>
 
 
-To use this repository on HuggingFace : - https://huggingface.co/spaces/DebasishDhal99/Youtube_Playlist
+# Average duration of a playlist
+Average duration of videos is calculated for the publicly available videos in that playlist. For example, the average duration of videos in this playlist is around 9 minutes.
+
+<p align="center">
+  <img src="images/average_duraiton.png" alt="CloudSat orbit superimposed on INSAT-3DR coverage area.">
+</p>
 
 
-In addition, given two playlists as input, it will telly you which videos belong only to one of the playlists. This was my original goal when I started with this repository. I have been maintaining two playlists for many years, the two playlists are meant for the same task. Whenever I find a relevant video, I add to both the playlist. But I wanted to find out if over the years if these playlists have started diverging. This function worked well, and I found that out of ~250 videos, some 10-15 videos were present in only one of the playlists. 
+# Playlist mismatch
+Given two playlists, this function gets the videos that are present in one of the playlists, but not in the other. 
+The two playlists are given here, [HindiSongs1](https://youtube.com/playlist?list=PLgeEuUJpv5I-jRo3Ibddg96Ke5QRryBQf&si=HZKtxDOm6RbmYieu) and [HindiSongs2](https://youtube.com/playlist?list=PLgeEuUJpv5I-0eV03cUzMAVyHDyVV_43D&si=t8mf-O0CNe23dwlS).
+<p align="center">
+  <img src="images/mismatch.png" alt="CloudSat orbit superimposed on INSAT-3DR coverage area.">
+</p>
 
-More features might be added in future. 
 
 
+
+
+
+
+
+
+**************************************************************************************************
+Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
