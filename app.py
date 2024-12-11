@@ -14,56 +14,51 @@ def playlist_duration_calculator(playlist_link, calculation_type):
         result = playlist_average_duration_func(playlist_link)
         return f"Average Duration: {result}"
 
-playlist_link_input = gr.inputs.Textbox(label="Playlist Link")
-calculation_type_input = gr.inputs.Radio(["Total Duration", "Average Duration"], label="What to calculate?")
-outputs = gr.outputs.Textbox(label="Result")
-
 heading = "YouTube Playlist Duration Calculator"
 description = '''Enter a YouTube playlist link to calculate its total duration or average duration.\n
 Do not enter the link of a video that belongs to that playlist.\n
 Use the link in the share option of the playlist's page
 '''
 
-
 duration_interface = gr.Interface(
     fn=playlist_duration_calculator,
-    inputs=[playlist_link_input, calculation_type_input],
-    outputs=outputs,
+    inputs=[
+        gr.Textbox(label="Playlist Link"),
+        gr.Radio(["Total Duration", "Average Duration"], label="What to calculate?")
+    ],
+    outputs=gr.Textbox(label="Result"),
     title=heading,
-    description=description,
-    # examples=[ 
-    #     ["https://www.youtube.com/playlist?list=PL-osiE80TeTsWmV9i9c58mdDCSskIFdDS", "Total Duration"],
-    #     ["https://www.youtube.com/playlist?list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p", "Average Duration"],
-    # ], #Examples have been removed, they were creating some problems.
-    theme="compact",
+    description=description
 )
 
 second_heading = "YouTube Playlist Mismatch Calculator"
-second_description = "Enter two YouTube playlist links (without quotation marks) to compare their contents and find the mismatch."
-mismatch_outputs = gr.outputs.Textbox(label="Mismatch between two playlists")
+second_description = "Enter two YouTube playlist links to compare their contents and find the mismatch."
 
 def playlist_mismatch_calculator(playlist_link_1, playlist_link_2, output_options):
     result = playlists_mismatch_func(playlist_link_1, playlist_link_2, output_options)
     playlist1name = result[2]
     playlist2name = result[3]
-    text = 'Present in {}, not in {} :- \n{} \n \nPresent in {}, not in {} :-\n {}'.format(result[2],result[3], '\n'.join(result[0]), result[3], result[2], '\n'.join(result[1]))
-    return f"Mismatch Result between the two playlists are as follows: -\n\n {text}"
-
-playlist_link_1_input = gr.inputs.Textbox(label="Playlist Link 1")
-playlist_link_2_input = gr.inputs.Textbox(label="Playlist Link 2")
-output_options = gr.inputs.Radio(["id", "link", "name"], label="Output Options")
+    text = 'Present in {}, not in {} :- \n{} \n \nPresent in {}, not in {} :-\n {}'.format(
+        playlist1name, playlist2name, '\n'.join(result[0]),
+        playlist2name, playlist1name, '\n'.join(result[1])
+    )
+    return f"Mismatch Result between the two playlists are as follows: -\n\n{text}"
 
 mismatch_interface = gr.Interface(
     fn=playlist_mismatch_calculator,
-    inputs=[playlist_link_1_input, playlist_link_2_input, output_options],
-    outputs=mismatch_outputs,
+    inputs=[
+        gr.Textbox(label="Playlist Link 1"),
+        gr.Textbox(label="Playlist Link 2"),
+        gr.Radio(["id", "link", "name"], label="Output Options")
+    ],
+    outputs=gr.Textbox(label="Mismatch between two playlists"),
     title=second_heading,
-    description=second_description,
-    # examples=[
-    #     ["https://www.youtube.com/playlist?list=PL-osiE80TeTsWmV9i9c58mdDCSskIFdDS", "https://www.youtube.com/playlist?list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p"],
-    # ],
-    theme="compact",
+    description=second_description
 )
 
-combinedinterface = gr.TabbedInterface([duration_interface,mismatch_interface],['Playlist Total and Average Duration', 'Playlist Mismatch'])
-combinedinterface.launch()
+combined_interface = gr.TabbedInterface(
+    [duration_interface, mismatch_interface],
+    ['Playlist Total and Average Duration', 'Playlist Mismatch']
+)
+
+combined_interface.launch()
